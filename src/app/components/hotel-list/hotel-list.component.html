@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-md-2 mx-auto">
+        <form #searchForm="ngForm" (submit)="searchHotel(searchForm)">
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <select class="form-control" [(ngModel)]="search.locationId" #location="ngModel" name="location">
+                    <option [ngValue]="undefined" disabled>--Select--</option>
+                    <option *ngFor="let location of locations" [ngValue]="location.id">{{location.name}}</option>
+                </select>
+                <div *ngIf="location.invalid && location.touched">
+                    <div *ngIf="location.errors && location.errors.required" class="text-danger">Location can not be
+                        empty
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fromDate">From:</label>
+                <input type="date" class="form-control" name="fromDate" [(ngModel)]="search.fromDate"
+                    #fromDate="ngModel" required />
+                <div *ngIf="fromDate.invalid && fromDate.touched">
+                    <div *ngIf="fromDate.errors && fromDate.errors.required" class="text-danger">
+                        From date can not be empty</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="toDate">To:</label>
+                <input type="date" class="form-control" name="toDate" [(ngModel)]="search.toDate" #toDate="ngModel"
+                    required />
+                <div *ngIf="toDate.invalid && toDate.touched">
+                    <div *ngIf="toDate.errors && toDate.errors.required" class="text-danger">
+                        To date can not be empty</div>
+                </div>
+                <!-- <div>total stay night {{calculateDate(search.fromDate, search.toDate)}}</div> -->
+            </div>
+
+            <div class="form-group">
+                <label for="adult">Adult:</label>
+                <input type="number" class="form-control" name="adult" [(ngModel)]="search.adult" #adult="ngModel"
+                    required />
+                <div *ngIf="adult.invalid && adult.touched">
+                    <div *ngIf="adult.errors && adult.errors.required" class="text-danger">
+                        Adult can not be empty</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="children">Children:</label>
+                <input type="number" class="form-control" name="children" [(ngModel)]="search.children"
+                    #children="ngModel" required />
+                <div *ngIf="children.invalid && children.touched">
+                    <div *ngIf="children.errors && children.errors.required" class="text-danger">
+                        Children can not be empty</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="noOfRoom">No fo room:</label>
+                <input type="number" class="form-control" name="noOfRoom" [(ngModel)]="search.noOfRoom"
+                    #noOfRoom="ngModel" required />
+                <div *ngIf="noOfRoom.invalid && noOfRoom.touched">
+                    <div *ngIf="noOfRoom.errors && noOfRoom.errors.required" class="text-danger">
+                        No of room can not be empty</div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" [disabled]="searchForm.invalid" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-6 col-lg-4 mx-auto">
+        <div class="card margin-top10" style="width: 18rem;" *ngFor="let item of hotelList">
+            <img src="{{item.imageUrl}}" class="card-img-top" alt="..." style="width:100px;height:100px;">
+            <div class="card-body">
+                <h5 class="card-title">{{item.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Rs {{item.price}}</h6>
+                <p class="card-text">{{item.location}}</p>
+                <a class="card-title btn btn-primary" [routerLink]="['/detail',item.id]">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
